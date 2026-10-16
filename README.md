@@ -90,7 +90,7 @@ Fields of a move:
 - `cat`: one of `deals`, `tenders`, `contracts`, `partners`, `strategy`.
 - `dp`: how to print the date: `day`, `month`, `year`, `since` or `by`.
 - `lost`: optional label for a tender not won, such as `"Lost"`, `"No bid"` or `"Withdrew"`. The move is then drawn hollow.
-- `techs`: energy sources from `data/shared.js`. Use `[]` for a move that covers every source, such as group strategy; it then stays visible whatever source filter is set.
+- `techs`: energy sources from `data/shared.js`. Use `[]` for a move that isn't tied to one source, such as a group target or an ownership change; the **Company-wide moves** filter shows or hides these.
 
 After editing, run the checks (Node 18 or later):
 

@@ -98,7 +98,9 @@ const MAP_TECHS = TECHS;
 const CHART_TECHS = TECHS.filter(t => t.id !== "biogas");
 const TECH = Object.fromEntries(TECHS.map(t => [t.id, t]));
 const activeTechs = new Set(TECHS.map(t => t.id).filter(id => id !== "nuclear"));
-const techOn = m => !m.techs.length || m.techs.some(t => activeTechs.has(t));
+// Moves with no single source (targets, ownership changes, renames) follow the "Company-wide moves" chip instead.
+let showCompanyWide = true;
+const techOn = m => m.techs.length ? m.techs.some(t => activeTechs.has(t)) : showCompanyWide;
 const activeCats = new Set(CATS.map(c => c.id));
 const activePer = new Set(PERIODS.map(p => p.id));
 const moveVisible = m => coOn(m.co) && activeCats.has(m.cat) && activePer.has(m.period) && techOn(m);
@@ -219,8 +221,9 @@ function fit(animate) {
     y0 = Math.min(y0, n.y - n.r - 4); y1 = Math.max(y1, n.y + n.r + 22);
   });
   const pad = 18, bw = x1 - x0 + pad * 2, bh = y1 - y0 + pad * 2;
-  const s = Math.max(0.2, Math.min(1.5, Math.min(w / bw, (h - 30) / bh)));
-  const t = d3.zoomIdentity.translate(w / 2 - s * (x0 + x1) / 2, (h - 20) / 2 - s * (y0 + y1) / 2).scale(s);
+  const top = 48, bottom = 26; // keep clear of the zoom buttons and the hint line
+  const s = Math.max(0.2, Math.min(1.5, Math.min(w / bw, (h - top - bottom) / bh)));
+  const t = d3.zoomIdentity.translate(w / 2 - s * (x0 + x1) / 2, top + (h - top - bottom) / 2 - s * (y0 + y1) / 2).scale(s);
   (animate ? svg.transition().duration(350) : svg).call(zoom.transform, t);
 }
 document.getElementById("zin").onclick = () => svg.transition().duration(200).call(zoom.scaleBy, 1.3);
@@ -397,7 +400,7 @@ function renderStrips() {
     `<button type="button" class="chip" data-co="${c.id}" aria-pressed="${coOn(c.id)}"><span class="codot ${c.id}" style="margin-right:0"></span>${esc(c.name)}<span class="n">${MOVES.filter(m => m.co === c.id).length}</span></button>`).join("");
   document.querySelector(".js-tech").innerHTML = `<span class="lab">Sources</span>` + TECHS.map(t =>
     `<button type="button" class="chip" data-tech="${t.id}" aria-pressed="${activeTechs.has(t.id)}" title="${esc(t.note || t.name)}">${esc(t.name)}<span class="n">${base.filter(m => m.techs.includes(t.id)).length}</span></button>`).join("") +
-    `<span class="note">Moves that cover every source stay visible.</span>`;
+    `<button type="button" class="chip" data-cw="1" aria-pressed="${showCompanyWide}" style="margin-left:8px" title="Targets, ownership changes and other moves not tied to one source">Company-wide moves<span class="n">${base.filter(m => !m.techs.length).length}</span></button>`;
   document.querySelector(".js-cat").innerHTML = `<span class="lab">Category</span>` + CATS.map(c =>
     `<button type="button" class="chip" data-cat="${c.id}" aria-pressed="${activeCats.has(c.id)}">${shapeSvg(c.id, 14)}${esc(c.name)}<span class="n">${base.filter(m => m.cat === c.id).length}</span></button>`).join("");
   document.querySelector(".js-per").innerHTML = `<span class="lab">Period</span>` + PERIODS.map(p =>
@@ -410,7 +413,7 @@ function renderStrips() {
 function applyFilters() {
   nodes.forEach(n => {
     if (n.kind === "center") n._off = !coOn(n.co);
-    else if (n.kind === "hub") n._off = !coOn(n.co) || !activeCats.has(n.cat);
+    else if (n.kind === "hub") n._off = !MOVES.some(m => m.co === n.co && m.cat === n.cat && moveVisible(m));
     else if (n.kind === "move") n._off = !moveVisible(MOVE[n.id]);
   });
   nodes.filter(n => n.kind === "cp").forEach(n => {
@@ -432,6 +435,7 @@ function applyFilters() {
 function showAll() {
   COS.forEach(c => activeCos.add(c.id)); CATS.forEach(c => activeCats.add(c.id)); PERIODS.forEach(p => activePer.add(p.id));
   TECHS.forEach(t => { if (t.id !== "nuclear") activeTechs.add(t.id); });
+  showCompanyWide = true;
   applyFilters();
 }
 function toggleIn(set, key) { if (set.has(key) && set.size === 1) return; set.has(key) ? set.delete(key) : set.add(key); }
@@ -439,6 +443,7 @@ document.getElementById("filters").addEventListener("click", ev => {
   const b = ev.target.closest("button"); if (!b) return;
   if (b.dataset.co) toggleIn(activeCos, b.dataset.co);
   else if (b.dataset.tech) toggleIn(activeTechs, b.dataset.tech);
+  else if (b.dataset.cw) showCompanyWide = !showCompanyWide;
   else if (b.dataset.cat) toggleIn(activeCats, b.dataset.cat);
   else if (b.dataset.per) toggleIn(activePer, b.dataset.per);
   else if (b.dataset.view) capView = b.dataset.view;
