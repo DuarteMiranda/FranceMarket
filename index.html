@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>French Renewables Moves</title>
+<meta name="description" content="Market moves by TotalEnergies, Boralex, EDF and Engie in French renewables, 2016–2026: a relationship map, capacity by energy source and every source linked.">
+<meta property="og:title" content="French Renewables Moves">
+<meta property="og:description" content="Ten years of public moves by four companies in French renewables, mapped and sourced.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23212E3E'/%3E%3Ccircle cx='10' cy='11' r='4' fill='%2328FF52'/%3E%3Ccircle cx='22' cy='11' r='3' fill='%23fff'/%3E%3Ccircle cx='16' cy='22' r='4' fill='%23fff'/%3E%3Cpath d='M10 11L22 11M10 11L16 22M22 11L16 22' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="band"><div class="bandin">
+    <div class="eyebrow">Market moves · Renewables · France · Oct 2016 – Oct 2026</div>
+    <h1 id="title">TotalEnergies, Boralex, EDF and Engie in French renewables</h1>
+    <p class="dek">Ten years of public moves by <span id="dek-n">four</span> companies, sorted into the same five categories and linked to the companies and public bodies on the other side, with the capacity each one reports by energy source.</p>
+    <div class="meta" id="meta"></div>
+</div></header>
+<nav class="nav" aria-label="Pages"><div class="navin">
+  <a href="#map" data-page-link="map">Relationship map</a>
+  <a href="#capacity" data-page-link="capacity">Capacity and timeline</a>
+</div></nav>
+
+<div class="wrap">
+  <div class="card filters" id="filters" style="padding:12px 14px">
+    <div class="strip js-co" role="group" aria-label="Companies"></div>
+    <div class="strip js-tech" role="group" aria-label="Energy sources"></div>
+    <div class="strip js-cat" role="group" aria-label="Categories"></div>
+    <div class="strip js-per" role="group" aria-label="Periods"></div>
+    <div class="strip js-view view-only" role="group" aria-label="Capacity view" hidden></div>
+  </div>
+
+  <div class="page" id="page-map">
+    <div class="stage">
+      <div class="card mapbox" id="mapbox">
+        <svg id="map" aria-label="Relationship map of TotalEnergies, Boralex, EDF and Engie moves in French renewables. The table at the bottom lists the same moves."></svg>
+        <div class="zoom">
+          <button type="button" id="zin" aria-label="Zoom in">+</button>
+          <button type="button" id="zout" aria-label="Zoom out">−</button>
+          <button type="button" id="zfit">Fit</button>
+          <button type="button" id="zfull" aria-pressed="false">Full screen</button>
+        </div>
+        <div class="hint">Click a shape for details · drag to pan · scroll to zoom</div>
+        <div class="tip" id="tip" hidden></div>
+      </div>
+      <aside class="card panel" id="panel" aria-live="polite"></aside>
+    </div>
+
+    <section>
+      <h2 class="sec">What the moves add up to</h2>
+      <div class="findings" id="findings"></div>
+    </section>
+
+    <section>
+      <h2 class="sec">Gaps, exclusions and what to watch</h2>
+      <div class="gaps" id="gaps"></div>
+    </section>
+
+    <section>
+      <h2 class="sec">All moves</h2>
+      <div class="card tablewrap">
+        <table>
+          <thead><tr><th>Date</th><th>Company</th><th>Move</th><th>Category</th><th class="num">MW</th><th>Key figures</th><th>Other side</th><th>Source</th></tr></thead>
+          <tbody id="ledger"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="page" id="page-capacity" hidden>
+    <section>
+      <h2 class="sec">Megawatts involved in each move</h2>
+      <p class="secdek">One row per company on the same log scale, plotted where a source gives megawatts. All four filters apply here.</p>
+      <div class="card chart" id="tlcard">
+        <div class="legend" id="tllegend"></div>
+        <svg class="plot" id="tl" role="img" aria-label="Timeline of moves by date and megawatts on a log scale, one row per company"></svg>
+        <p class="foot">The points mix pipelines, tender wins, sites bid for, portfolio sales and stakes, so they compare scale rather than add up. Supply contracts given only in GWh are left out.</p>
+        <div class="tip" id="tltip" hidden></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="sec">Capacity by energy source</h2>
+      <p class="secdek">The capacity each company reports in France, one panel per source on its own scale, with published totals on the right. Companies and sources filter these charts; category and period do not.</p>
+      <div style="display:grid; gap:12px">
+        <div class="legend cap" id="caplegend"></div>
+        <div id="v-source" class="capgrid">
+          <div class="panels" id="panels"></div>
+          <article class="card pcard" id="totalcard"></article>
+        </div>
+        <div id="v-combined" hidden>
+          <div class="card wide">
+            <h3>All selected sources added up</h3>
+            <p class="sub-note">Each source is carried forward from its last published figure until a new one appears, so ringed points mix figures from different years. Hover a point to see what it adds up.</p>
+            <svg class="plot" id="combined" role="img" aria-label="Combined French capacity per company"></svg>
+            <p class="missing" id="combined-missing"></p>
+            <p class="missing" id="combined-off"></p>
+          </div>
+        </div>
+        <p class="foot" id="capfoot"></p>
+      </div>
+    </section>
+
+    <details class="card" id="figtables">
+      <summary>Figures behind the capacity charts</summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Company</th><th>Date</th><th>Figure</th><th>Basis</th><th>Note</th><th>Source</th></tr></thead>
+          <tbody id="caprows"></tbody>
+        </table>
+      </div>
+      <h3>Targets</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Company</th><th>By</th><th>Target</th><th>Sources</th><th>Context</th><th>Source</th></tr></thead>
+          <tbody id="tgtrows"></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <footer>
+    Method: web search of company releases, wire services, regulator documents, annual reports and trade press on 15–16 October 2026, limited to moves inside France. Every move and capacity figure links to the release, report or article it came from. Figures are as reported by those sources and were not independently audited. Categories were fixed before sorting so the same kind of move always lands in the same place for every company. Dates are announcement dates; for lost tenders, the date the winner was named.
+  </footer>
+</div>
+<div id="ctip" hidden></div>
+
+<!-- Library -->
+<script src="assets/js/vendor/d3.v7.8.5.min.js"></script>
+<!-- Data: shared lists, the company list, then one file per company (order does not matter) -->
+<script src="data/shared.js"></script>
+<script src="data/companies.js"></script>
+<script src="data/totalenergies.js"></script>
+<script src="data/boralex.js"></script>
+<script src="data/edf.js"></script>
+<script src="data/engie.js"></script>
+<!-- Page -->
+<script src="assets/js/app.js"></script>
+</body>
+</html>

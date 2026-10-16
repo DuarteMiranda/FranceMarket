@@ -1,0 +1,18 @@
+# Runs the data checks on every push and pull request, so a broken source key or move id
+# shows up as a red cross on GitHub before anyone sees a broken page.
+name: Check data
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node tools/check-data.js
+      - run: node tools/build-standalone.js

@@ -1,0 +1,11 @@
+{
+  "name": "france-renewables-moves",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static site: market moves by TotalEnergies, Boralex, EDF and Engie in French renewables, 2016–2026.",
+  "scripts": {
+    "check": "node tools/check-data.js",
+    "build": "node tools/build-standalone.js",
+    "serve": "python3 -m http.server 8000"
+  }
+}
