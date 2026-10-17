@@ -835,7 +835,7 @@ document.getElementById("ledger").addEventListener("keydown", ev => {
 });
 
 document.getElementById("title").textContent = names(COS.map(c => c.id)) + " in French renewables";
-document.getElementById("dek-n").textContent = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][COS.length] || String(COS.length);
+document.getElementById("dek-n").textContent = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"][COS.length] || String(COS.length);
 renderStrips();
 renderPanel(null);
 renderFindings();

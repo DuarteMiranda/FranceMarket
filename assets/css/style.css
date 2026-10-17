@@ -1,6 +1,6 @@
 /* French renewables market moves. Layout: EDP marine masthead band with a sticky two-page nav (relationship map | capacity and timeline), one shared filter card,
    then either the map beside a reading panel with findings, gaps and ledger, or the charts.
-   Colour means company everywhere (TotalEnergies violet, Boralex green, EDF blue, Engie magenta); shape means category. */
+   Colour means company everywhere (TotalEnergies violet, Boralex green, EDF blue, Engie magenta, EDP brick red); shape means category. */
 :root {
   --band: #212E3E;        /* EDP Marine Blue */
   --on-band: #FFFFFF;
@@ -22,6 +22,13 @@
   --co-bx: #13A03A;       /* Electric Green, stepped down for contrast on white */
   --co-edf: #0A86C9;      /* Ice Blue, stepped down; validated against the two above */
   --co-eng: #D6338A;      /* Magenta; validated against the three above */
+  --co-edp: #A8321C;      /* Brick red; validated against the four above */
+  --co-neo: #0E4CAA;      /* Deep blue; validated against the five above (all pairs) */
+  --co-ib: #42B2AE;       /* Teal; passes CVD and normal-vision checks against the six above; contrast on white 2.6:1, so labels and the table carry it */
+  --co-ors: #7D2A79;      /* Plum; passes CVD and normal-vision checks against the seven above */
+  --co-vol: #F8767E;      /* Coral; passes CVD and normal-vision checks against the eight above; contrast on white 2.7:1. Dark-mode coral sits above the lightness band (no in-band ninth colour exists) */
+  --co-rwe: #C1AC15;      /* Mustard; passes CVD and normal-vision checks against the nine above; contrast on white 2.3:1, dark-mode mustard above the band like Voltalia */
+  --co-enl: #A196F1;      /* Lavender; passes CVD and normal-vision checks against the ten above; contrast on white 2.6:1, dark-mode lavender above the band */
   --f-display: "FT Base", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-body: "FT Base", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -30,14 +37,14 @@
   :root:not([data-theme="light"]) {
     --bg: #131B25; --surface: #1B2633; --fg: #EEF3F4; --muted: #A3B4B8; --faint: #7C9599;
     --line: #2A3847; --line-strong: #40536A; --node: #3B4B5C; --node-stroke: #8DA3A8; --hover: #233142;
-    --focus: #0CD3F8; --co-te: #8366FF; --co-bx: #19AE42; --co-edf: #1E95D6; --co-eng: #E0559B;
+    --focus: #0CD3F8; --co-te: #8366FF; --co-bx: #19AE42; --co-edf: #1E95D6; --co-eng: #E0559B; --co-edp: #C24229; --co-neo: #195CC7; --co-ib: #1E8163; --co-ors: #853E80; --co-vol: #EA9794; --co-rwe: #D5BF36; --co-enl: #ADA3FF;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #131B25; --surface: #1B2633; --fg: #EEF3F4; --muted: #A3B4B8; --faint: #7C9599;
   --line: #2A3847; --line-strong: #40536A; --node: #3B4B5C; --node-stroke: #8DA3A8; --hover: #233142;
-  --focus: #0CD3F8; --co-te: #8366FF; --co-bx: #19AE42; --co-edf: #1E95D6; --co-eng: #E0559B;
+  --focus: #0CD3F8; --co-te: #8366FF; --co-bx: #19AE42; --co-edf: #1E95D6; --co-eng: #E0559B; --co-edp: #C24229; --co-neo: #195CC7; --co-ib: #1E8163; --co-ors: #853E80; --co-vol: #EA9794; --co-rwe: #D5BF36; --co-enl: #ADA3FF;
   color-scheme: dark;
 }
 

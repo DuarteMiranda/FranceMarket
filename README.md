@@ -1,6 +1,6 @@
 # French Renewables Moves
 
-A static site showing ten years (Oct 2016 – Oct 2026) of public market moves by TotalEnergies, Boralex, EDF and Engie in French renewables. It has two pages:
+A static site showing ten years (Oct 2016 – Oct 2026) of public market moves by TotalEnergies, Boralex, EDF, Engie, EDP (EDP Renewables), Neoen, Iberdrola, Ørsted, Voltalia, RWE and Enel in French renewables. It has two pages:
 
 - **Relationship map**: each move is linked to the company or public body on the other side, with findings, gaps and a full table of moves.
 - **Capacity and timeline**: the megawatts involved in each move, and each company's reported capacity by energy source.
@@ -23,6 +23,13 @@ data/
   boralex.js                  findings and gaps
   edf.js
   engie.js
+  edp.js
+  neoen.js
+  iberdrola.js
+  orsted.js
+  voltalia.js
+  rwe.js
+  enel.js
 tools/
   check-data.js               Checks every data file for broken references
   build-standalone.js         Builds a single offline HTML file into dist/
@@ -104,10 +111,10 @@ When you refresh the research, also update `asOf` and `today` at the top of `dat
 
 ## Add a company
 
-1. Copy a data file, for example `data/engie.js` to `data/iberdrola.js`. Change the last lines so it registers under a new short id, for example `window.COMPANY_DATA.ib = {…}`. Use a source-key prefix the other files don't use.
+1. Copy a data file, for example `data/engie.js` to `data/vattenfall.js`. Change the last lines so it registers under a new short id, for example `window.COMPANY_DATA.vat = {…}`. Use a source-key prefix the other files don't use.
 2. Add the company to `companies` in `data/companies.js` with its id, name, file name, position on the map (`cx`, `cy`), category angles and a line pattern (`dash`). If you leave out `cx`/`cy`, it is placed on a circle automatically.
-3. Add `<script src="data/iberdrola.js"></script>` to `index.html`, next to the other data files.
-4. Add a colour token `--co-ib` to `assets/css/style.css`, in `:root` and in both dark-mode blocks. Check that the new colour stays distinguishable from the others for colour-blind readers.
+3. Add `<script src="data/vattenfall.js"></script>` to `index.html`, next to the other data files.
+4. Add a colour token `--co-vat` to `assets/css/style.css`, in `:root` and in both dark-mode blocks. Check that the new colour stays distinguishable from the others for colour-blind readers.
 
 Then run `node tools/check-data.js`. The page title, the filters, the map, the charts and the findings update on their own.
 
